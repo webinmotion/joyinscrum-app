@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
-import { MD3LightTheme as DefaultTheme, PaperProvider, } from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme, Provider as PaperProvider, } from 'react-native-paper';
 import AuthScreen from './screens/AuthScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import HomeScreen from "./screens/HomeScreen";
@@ -11,12 +11,22 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { expo as expoConfig } from './app.json';
 
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#551a8b',
+    accent: '#f1c40f',
+  },
+};
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
   return (
-    <PaperProvider theme={DefaultTheme}>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Landing">
           <Stack.Screen name="Landing" component={HomeScreen} options={{ title: 'JoyInScrum Client' }} />
