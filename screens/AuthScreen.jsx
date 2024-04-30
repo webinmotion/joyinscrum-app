@@ -93,7 +93,7 @@ export default function AuthScreen({ navigation }) {
                 <Button icon="lock" mode="contained" style={styles.button} disabled={loading} onPress={() => signUpWithEmail()}>
                     <Text style={styles.btnText}>Sign up</Text>
                 </Button>
-                
+
                 <Button icon="login-variant" mode="contained" style={styles.button} disabled={loading} onPress={() => signInWithEmail()}>
                     <Text style={styles.btnText}>Sign in</Text>
                 </Button>
@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
         padding: 10
     },
     btnText: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#fff'
     }
 
 })

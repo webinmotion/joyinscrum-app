@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     btnText: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#fff'
     }
 })
