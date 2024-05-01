@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const ScrumScreen = ({ route, navigation }) => {
+const ScrumScreen = ({ route }) => {
 
   const { scrumId, playerHandle } = route.params;
 
@@ -21,7 +21,8 @@ const ScrumScreen = ({ route, navigation }) => {
 
   React.useEffect(() => {
     (async function () {
-      let { data: players, error } = await supabase
+      console.log("SCRUM_ID", scrumId, "PLAYER_HANDLE", playerHandle)
+      let { data: existing, error } = await supabase
         .from('tbl_scrum_player')
         .select("*")
         // Filters
@@ -29,14 +30,14 @@ const ScrumScreen = ({ route, navigation }) => {
         .eq('scrum_id', scrumId)
 
       if (error) {
-        showAlert({ message: error.message, severity: 'error' })
+        alert(error.message)
       }
-      else if (players?.length > 0) {
-        console.log(players)
+      else if (existing?.length > 0) {
+        console.log(existing)
       }
       else {
 
-        const { data: players2, error } = await supabase
+        const { data: created, error } = await supabase
           .from('tbl_scrum_player')
           .insert([
             { player_handle: playerHandle, scrum_id: scrumId, player_joined: true, },
@@ -44,10 +45,10 @@ const ScrumScreen = ({ route, navigation }) => {
           .select()
 
         if (error) {
-          showAlert({ message: error.message, severity: 'error' })
+          alert(error.message)
         }
-        else if (players2?.length > 0) {
-          console.log(players2)
+        else if (created?.length > 0) {
+          console.log(created)
         }
       }
     })()
@@ -186,5 +187,5 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
     fontSize: 18
-  }
+  },
 });

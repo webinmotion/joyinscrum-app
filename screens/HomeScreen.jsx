@@ -41,5 +41,5 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: 'bold',
     color: '#fff'
-  }
+  },
 });

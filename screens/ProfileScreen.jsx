@@ -19,15 +19,15 @@ export default function ProfileScreen({ route, navigation }) {
     useEffect(() => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
             console.log("onAuthStateChange", event, 'Session', session);
-            if(event === 'SIGNED_OUT') {
-                navigation.navigate('Landing')
+            if (event === 'SIGNED_OUT') {
+                navigation.popToTop('Landing')
             }
-          })
+        })
 
-          return () => {
+        return () => {
             // call unsubscribe to remove the callback
             subscription.unsubscribe()
-          }
+        }
     }, [])
 
     async function getProfile() {
@@ -109,6 +109,17 @@ export default function ProfileScreen({ route, navigation }) {
                 <TextInput label="Country" value={country || ''} onChangeText={(text) => setCountry(text)} />
             </View>
 
+            <View>
+                <Button
+                    icon="account-check"
+                    mode="contained"
+                    style={styles.button}
+                    onPress={() => updateProfile({ first, last, phone, country })}
+                    disabled={loading}>
+                    <Text style={styles.btnText}>{loading ? 'Loading ...' : 'Update'}</Text>
+                </Button>
+            </View>
+
             <View style={styles.fixToText}>
                 <Button
                     icon="lock"
@@ -118,12 +129,11 @@ export default function ProfileScreen({ route, navigation }) {
                     <Text style={styles.btnText}>Sign Out</Text>
                 </Button>
                 <Button
-                    icon="account-check"
+                    icon="restart"
                     mode="contained"
                     style={styles.button}
-                    onPress={() => updateProfile({ first, last, phone, country })}
-                    disabled={loading}>
-                    <Text style={styles.btnText}>{loading ? 'Loading ...' : 'Update'}</Text>
+                    onPress={() => navigation.popToTop()}>
+                    <Text style={styles.btnText}>Start Over</Text>
                 </Button>
             </View>
         </View>
@@ -148,5 +158,5 @@ const styles = StyleSheet.create({
     btnText: {
         fontWeight: 'bold',
         color: '#fff'
-    }
+    },
 })

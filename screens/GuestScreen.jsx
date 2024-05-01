@@ -1,12 +1,15 @@
 import { TextInput, Button, Text } from 'react-native-paper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useAppContext } from '../store';
+import { supabase } from '../service/auth';
 
 const GuestScreen = ({ route, navigation }) => {
 
   const { scrumId } = route.params;
 
   const [handle, setHandle] = useState('');
+  const { auth: { session } } = useAppContext();
 
   const handleInputChange = (input) => {
     setHandle(input);
@@ -19,6 +22,29 @@ const GuestScreen = ({ route, navigation }) => {
     })
   }
 
+  useEffect(() => {
+    (async function () {
+      if (session?.user?.email) {
+        console.log("user session detected. Will generate a user handle for", session?.user.email);
+        let { data: rows, error } = await supabase
+          .from('tbl_scrum_admin')
+          .select('*')
+          .eq('email_address', session?.user.email);
+
+        if (error) {
+          console.log('error retrieving player info', error.message);
+        }
+        else {
+          const row = rows[0]
+          setHandle(row.email_address);
+          navigation.navigate('Scrum', {
+            scrumId,
+            playerHandle: row.email_address,
+          })
+        }
+      }
+    })()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -53,5 +79,5 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: 'bold',
     color: '#fff'
-  }
+  },
 });

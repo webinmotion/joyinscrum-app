@@ -10,6 +10,9 @@ import ScannerScreen from "./screens/ScannerScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { expo as expoConfig } from './app.json';
+import { AppContextProvider, useAppContext } from './store';
+import { supabase } from './service/auth';
+import { useEffect } from 'react';
 
 const theme = {
   ...DefaultTheme,
@@ -23,7 +26,39 @@ const theme = {
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
+
+  const { setSession } = useAppContext();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession("getSession", session)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("onAuthStateChange", event)
+      switch (event) {
+        case "INITIAL_SESSION": {
+          console.log("starting new session", session);
+          break;
+        }
+        case "SIGNED_IN": {
+          console.log("user is signed in", session);
+          break;
+        }
+        default: {
+          //do nothing
+          break;
+        }
+      }
+      setSession(session)
+    })
+
+    return () => {
+      // call unsubscribe to remove the callback
+      subscription.unsubscribe()
+    }
+  }, [])
 
   return (
     <PaperProvider theme={theme}>
@@ -41,4 +76,12 @@ export default function App() {
   );
 }
 
-AppRegistry.registerComponent(expoConfig.name, () => App);
+export default function AppContainer() {
+  return (
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
+  )
+}
+
+AppRegistry.registerComponent(expoConfig.name, () => AppContainer);

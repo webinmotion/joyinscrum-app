@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Alert, StyleSheet, View, AppState } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { supabase } from '../service/auth';
+import { useAppContext } from '../store';
 
 AppState.addEventListener('change', (state) => {
     if (state === 'active') {
@@ -13,15 +14,17 @@ AppState.addEventListener('change', (state) => {
 
 export default function AuthScreen({ navigation }) {
 
-    const [session, setSession] = useState(null)
+    const { setSession } = useAppContext();
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session)
-        })
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session)
+            if(session?.user.email){
+                navigation.navigate('Profile', {
+                    session,
+                })
+            }
         })
     }, [])
 
@@ -120,6 +123,5 @@ const styles = StyleSheet.create({
     btnText: {
         fontWeight: 'bold',
         color: '#fff'
-    }
-
+    },
 })
