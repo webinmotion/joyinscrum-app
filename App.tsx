@@ -13,6 +13,7 @@ import { expo as expoConfig } from './app.json';
 import { AppContextProvider, useAppContext } from './store';
 import { supabase } from './service/auth';
 import { useEffect } from 'react';
+import "@expo/metro-runtime";
 
 const theme = {
   ...DefaultTheme,

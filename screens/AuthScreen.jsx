@@ -93,11 +93,11 @@ export default function AuthScreen({ navigation }) {
             </View>
 
             <View style={styles.fixToText}>
-                <Button icon="lock" mode="contained" style={styles.button} disabled={loading} onPress={() => signUpWithEmail()}>
+                <Button icon="lock" mode="contained" style={styles.button} disabled={loading || !email || !password} onPress={() => signUpWithEmail()}>
                     <Text style={styles.btnText}>Sign up</Text>
                 </Button>
 
-                <Button icon="login-variant" mode="contained" style={styles.button} disabled={loading} onPress={() => signInWithEmail()}>
+                <Button icon="login-variant" mode="contained" style={styles.button} disabled={loading || !email || !password} onPress={() => signInWithEmail()}>
                     <Text style={styles.btnText}>Sign in</Text>
                 </Button>
             </View>
