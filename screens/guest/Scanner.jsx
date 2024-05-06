@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Button, Text } from 'react-native-paper';
-import { View, StyleSheet, Linking } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-const ScannerScreen = ({ route, navigation }) => {
+export default function ({ navigation }) {
 
   const [hasPermission, setPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -51,8 +51,6 @@ const ScannerScreen = ({ route, navigation }) => {
     </View>
   );
 }
-
-export default ScannerScreen;
 
 const styles = StyleSheet.create({
   container: {

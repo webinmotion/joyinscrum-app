@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
-import { authReducer, initialAuth, } from './authReducer';
-import { signOutAction, setSessionAction, } from "./authActions";
+import { authReducer, initialAuth, } from '../store/authReducer';
+import { signOutAction, setSessionAction, } from "../store/authActions";
 import PropTypes from 'prop-types';
 
 const AppContext = createContext(null)
@@ -9,7 +9,7 @@ export function useAppContext() {
     return useContext(AppContext)
 }
 
-export function AppContextProvider({ children }) {
+export function AuthProvider({ children }) {
 
     const [auth, authDispatch] = useReducer(authReducer, initialAuth);
 
@@ -25,7 +25,6 @@ export function AppContextProvider({ children }) {
 
 }
 
-AppContextProvider.propTypes = {
-
+AuthProvider.propTypes = {
     children: PropTypes.object.isRequired
 }

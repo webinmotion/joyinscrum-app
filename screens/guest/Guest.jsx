@@ -1,10 +1,10 @@
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useAppContext } from '../store';
-import { supabase } from '../service/auth';
+import { useAppContext } from '../../provider/AuthProvider';
+import { supabase } from '../../service/auth';
 
-const GuestScreen = ({ route, navigation }) => {
+export default function ({ route, navigation }) {
 
   const { scrumId } = route.params;
 
@@ -63,8 +63,6 @@ const GuestScreen = ({ route, navigation }) => {
     </View>
   );
 }
-
-export default GuestScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Surface, Text } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
-import { supabase } from '../service/auth';
+import { supabase } from '../../service/auth';
 import { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const ScrumScreen = ({ route }) => {
+export default function ({ route }) {
 
   const { scrumId, playerHandle } = route.params;
 
@@ -133,8 +133,6 @@ const ScrumScreen = ({ route }) => {
     </View>
   );
 }
-
-export default ScrumScreen;
 
 const styles = StyleSheet.create({
   container: {

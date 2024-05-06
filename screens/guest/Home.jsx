@@ -1,7 +1,8 @@
 import { Text, Button } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
 
-const HomeScreen = ({ navigation }) => {
+export default function ({ navigation }) {
+
   return (
     <View style={styles.container}>
 
@@ -18,15 +19,13 @@ const HomeScreen = ({ navigation }) => {
         icon="account"
         mode="contained"
         style={styles.button}
-        onPress={() => navigation.navigate('Account')}
+        onPress={() => navigation.navigate('Profile')}
       >
         <Text style={styles.btnText}>My Profile</Text>
       </Button>
     </View>
   );
 }
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {

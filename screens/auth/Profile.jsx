@@ -1,34 +1,26 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../service/auth';
+import { supabase } from '../../service/auth';
 import { StyleSheet, View, Alert } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
+import { useAppContext } from '../../provider/AuthProvider';
 
-export default function ProfileScreen({ route, navigation }) {
+export default function ({ navigation }) {
 
     const [loading, setLoading] = useState(true)
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [phone, setPhone] = useState('')
     const [country, setCountry] = useState('')
-    const { session } = route.params;
+    const { auth: { session } } = useAppContext();
 
     useEffect(() => {
-        if (session) getProfile()
-    }, [session])
-
-    useEffect(() => {
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-            console.log("onAuthStateChange", event, 'Session', session);
-            if (event === 'SIGNED_OUT') {
-                navigation.popToTop('Landing')
-            }
-        })
-
-        return () => {
-            // call unsubscribe to remove the callback
-            subscription.unsubscribe()
+        if (session) {
+            getProfile()
         }
-    }, [])
+        else {
+            navigation.navigate('Login')
+        }
+    }, [session])
 
     async function getProfile() {
         try {
@@ -67,24 +59,31 @@ export default function ProfileScreen({ route, navigation }) {
     }) {
         try {
             setLoading(true)
-            if (!session?.user) throw new Error('No user on the session!')
+            if (!session?.user) throw new Error('No user on the session!');
 
-            const updates = {
-                email_address: session?.user.email,
-                first_name: first,
-                last_name: last,
-                phone_num: phone,
-                country
-            }
+            const { error: ranIntoProblem } = await supabase
+                .from('tbl_scrummage')
+                .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" });
 
-            const { error } = await supabase.from('tbl_scrum_admin').upsert(updates)
+            if (!ranIntoProblem) {
 
-            if (error) {
-                throw error
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                Alert.alert(error.message)
+                const updates = {
+                    email_address: session?.user.email,
+                    first_name: first,
+                    last_name: last,
+                    phone_num: phone,
+                    country
+                }
+                console.log('update profile', updates)
+
+                const { data, error } = await supabase.from('tbl_scrum_admin').upsert(updates).select("*")
+                
+                if (error) {
+                    if (error.message.includes("violates foreign key constraint")) {
+
+                    }
+                    Alert.alert(error.message)
+                }
             }
         } finally {
             setLoading(false)
