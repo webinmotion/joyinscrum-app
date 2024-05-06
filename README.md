@@ -44,7 +44,8 @@ building in eas
 ```bash
 npx expo install expo-system-ui
 # commit all pending git changes
-npx expo prebuild --clean
-eas build
+npx expo prebuild --clean --platform android
+# optionally - eas build:configure
+eas build --platform android (all android ios)
 ```
 

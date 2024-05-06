@@ -61,29 +61,27 @@ export default function ({ navigation }) {
             setLoading(true)
             if (!session?.user) throw new Error('No user on the session!');
 
-            const { error: ranIntoProblem } = await supabase
+            const { error: problem } = await supabase
                 .from('tbl_scrummage')
                 .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" });
 
-            if (!ranIntoProblem) {
+            if (!problem) {
+                Alert.alert("problem upserting record into scrummage collection")
+            }
 
-                const updates = {
-                    email_address: session?.user.email,
-                    first_name: first,
-                    last_name: last,
-                    phone_num: phone,
-                    country
-                }
-                console.log('update profile', updates)
+            const updates = {
+                email_address: session?.user.email,
+                first_name: first,
+                last_name: last,
+                phone_num: phone,
+                country
+            }
+            console.log('update profile', updates)
 
-                const { data, error } = await supabase.from('tbl_scrum_admin').upsert(updates).select("*")
-                
-                if (error) {
-                    if (error.message.includes("violates foreign key constraint")) {
-
-                    }
-                    Alert.alert(error.message)
-                }
+            const {  error } = await supabase.from('tbl_scrum_admin').upsert(updates);
+            
+            if (error) {
+                Alert.alert("error upserting record into scrum organizers' collection")
             }
         } finally {
             setLoading(false)
