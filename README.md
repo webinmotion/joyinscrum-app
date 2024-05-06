@@ -42,6 +42,8 @@ npm i @supabase/supabase-js
 
 building in eas
 ```bash
+npx expo install expo-system-ui
+# commit all pending git changes
 npx expo prebuild --clean
 eas build
 ```
