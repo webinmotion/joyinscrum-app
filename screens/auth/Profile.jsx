@@ -36,12 +36,12 @@ export default function ({ navigation }) {
                 throw error
             }
 
-            if (data) {
-                setFirst(data.first_name)
-                setLast(data.last_name)
-                setPhone(data.phone_num)
-                setCountry(data.country)
-            }
+            //clear inputs if no data is available
+            setFirst(data?.first_name || '');
+            setLast(data?.last_name || '');
+            setPhone(data?.phone_num || '');
+            setCountry(data?.country || '');
+
         } catch (error) {
             if (error instanceof Error) {
                 Alert.alert(error.message)
@@ -65,7 +65,7 @@ export default function ({ navigation }) {
                 .from('tbl_scrummage')
                 .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" });
 
-            if (!problem) {
+            if (problem) {
                 Alert.alert("problem upserting record into scrummage collection")
             }
 
@@ -78,8 +78,8 @@ export default function ({ navigation }) {
             }
             console.log('update profile', updates)
 
-            const {  error } = await supabase.from('tbl_scrum_admin').upsert(updates);
-            
+            const { error } = await supabase.from('tbl_scrum_admin').upsert(updates);
+
             if (error) {
                 Alert.alert("error upserting record into scrum organizers' collection")
             }
