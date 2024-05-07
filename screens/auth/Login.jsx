@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ScrollView,
-  TouchableOpacity,
+  Pressable,
   View,
   KeyboardAvoidingView,
   Image,
@@ -15,6 +15,7 @@ import {
 } from "react-native-paper";
 import { supabase } from '../../service/auth';
 import { useAppContext } from "../../provider/AuthProvider";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function ({ navigation }) {
   const [email, setEmail] = useState("");
@@ -142,7 +143,7 @@ export default function ({ navigation }) {
             }}
           >
             <Text size="md">Don't have an account?</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 navigation.navigate("Register");
               }}
@@ -156,7 +157,7 @@ export default function ({ navigation }) {
               >
                 Register here
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <View
             style={{
@@ -166,7 +167,7 @@ export default function ({ navigation }) {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 navigation.navigate("Recover");
               }}
@@ -174,7 +175,7 @@ export default function ({ navigation }) {
               <Text size="md" fontWeight="bold">
                 Forget password
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <View
             style={{
@@ -184,7 +185,7 @@ export default function ({ navigation }) {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity
+            <Pressable
               onPress={() => navigation.popToTop()}
             >
               <Text
@@ -196,9 +197,9 @@ export default function ({ navigation }) {
                   borderColor: "#ccc"
                 }}
               >
-                {"🔙 Exit"}
+                Exit <MaterialCommunityIcons name="location-exit" size={18} color="black" />
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </ScrollView>

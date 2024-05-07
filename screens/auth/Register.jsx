@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   ScrollView,
-  TouchableOpacity,
+  Pressable,
   View,
   KeyboardAvoidingView,
   Image,
@@ -124,7 +124,7 @@ export default function ({ navigation }) {
             }}
           >
             <Text size="md">Already have an account?</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 navigation.navigate("Login");
               }}
@@ -138,7 +138,7 @@ export default function ({ navigation }) {
               >
                 Login here
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </ScrollView>

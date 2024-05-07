@@ -61,16 +61,12 @@ export default function ({ navigation }) {
             setLoading(true)
             if (!session?.user) throw new Error('No user on the session!');
 
-            const { data, error: problem } = await supabase
+            const {error } = await supabase
                 .from('tbl_scrummage')
                 .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" })
-                .select();
 
-            if (problem) {
-                Alert.alert("problem upserting record into scrummage collection")
-            }
-            else{
-                console.log('record currently in the scrummage collection', data);
+            if (error) {
+                console.log('error', error.message);
             }
 
             const updates = {
@@ -82,10 +78,13 @@ export default function ({ navigation }) {
             }
             console.log('update profile', updates)
 
-            const { error } = await supabase.from('tbl_scrum_admin').upsert(updates);
+            const { error2 } = await supabase.from('tbl_scrum_admin').upsert(updates);
 
-            if (error) {
-                Alert.alert("error upserting record into scrum organizers' collection")
+            if (error2) {
+                Alert.alert("error upserting record into scrum organizers' collection");
+            }
+            else{
+                Alert.alert("Record updated successfully");
             }
         } finally {
             setLoading(false)
@@ -117,7 +116,7 @@ export default function ({ navigation }) {
                     style={styles.button}
                     onPress={() => updateProfile({ first, last, phone, country })}
                     disabled={loading}>
-                    <Text style={styles.btnText}>{loading ? 'Loading ...' : 'Update'}</Text>
+                    <Text style={styles.btnText}>{loading ? 'Saving ...' : 'Update'}</Text>
                 </Button>
             </View>
 

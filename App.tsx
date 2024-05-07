@@ -3,13 +3,11 @@ import { MD3LightTheme as DefaultTheme, PaperProvider, } from 'react-native-pape
 import LoginScreen from './screens/auth/Login';
 import RegisterScreen from './screens/auth/Register';
 import RecoverScreen from './screens/auth/Recover';
-// import ResetScreen from './screens/auth/Reset';
 import ProfileScreen from './screens/auth/Profile';
 import HomeScreen from "./screens/guest/Home";
 import GuestScreen from "./screens/guest/Guest";
 import ScrumScreen from "./screens/guest/Scrum";
 import ScannerScreen from "./screens/guest/Scanner";
-// import ScannerScreen from "./screens/guest/Scanner2";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { expo as expoConfig } from './app.json';

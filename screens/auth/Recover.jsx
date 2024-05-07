@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   ScrollView,
-  TouchableOpacity,
+  Pressable,
   View,
   KeyboardAvoidingView,
   Image,
@@ -33,7 +33,7 @@ export default function ({ navigation }) {
     else {
       alert("If the email is valid, you will find in your inbox an email with additional password recovery steps");
       console.log(data);
-      navigation.navigate('Reset');
+      navigation.popToTop()
     }
     setLoading(false);
   }
@@ -112,7 +112,7 @@ export default function ({ navigation }) {
             }}
           >
             <Text size="md">Already have an account?</Text>
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 navigation.navigate("Login");
               }}
@@ -126,7 +126,7 @@ export default function ({ navigation }) {
               >
                 Login here
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </ScrollView>

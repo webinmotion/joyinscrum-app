@@ -1,5 +1,6 @@
 import { Text, Button, useTheme } from 'react-native-paper';
-import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
+import { View, StyleSheet, Pressable, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function ({ navigation }) {
 
@@ -24,19 +25,21 @@ export default function ({ navigation }) {
           }}
         >
 
-          <Button
-            icon="account"
-            mode="text"
-            style={{marginTop: 20,
+          <Pressable
+            style={{
+              marginTop: 20,
               padding: 10,
-            alignSelf: 'flex-end'}}
+              alignSelf: 'flex-end'
+            }}
             onPress={() => navigation.navigate('Profile')}
           >
-            <Text style={{
+            <Text fontWeight="bold" style={{
               fontWeight: 'bold',
               color: theme.colors.primary
-            }}>Manage my profile</Text>
-          </Button>
+            }}>
+              <MaterialCommunityIcons name="account" size={18} /> Visit my profile 
+            </Text>
+          </Pressable>
         </View>
 
         <View
