@@ -24,7 +24,7 @@ export default function ({ navigation }) {
     setLoading(true);
     console.log('redirect to reset', process.env.EXPO_PUBLIC_DOMAIN_URL)
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}?action=reset`,
+      redirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}/reset`,
     });
 
     if (error) {

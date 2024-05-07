@@ -27,7 +27,7 @@ export default function ({ navigation }) {
       email: email,
       password: password,
       options: {
-        emailRedirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}`,
+        emailRedirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}/signin`,
       },
     })
 
