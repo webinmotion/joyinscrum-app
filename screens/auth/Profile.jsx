@@ -61,12 +61,16 @@ export default function ({ navigation }) {
             setLoading(true)
             if (!session?.user) throw new Error('No user on the session!');
 
-            const { error: problem } = await supabase
+            const { data, error: problem } = await supabase
                 .from('tbl_scrummage')
-                .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" });
+                .upsert({ organizer_email: session?.user.email, scrum_choices: "1,2,3,4,5" })
+                .select();
 
             if (problem) {
                 Alert.alert("problem upserting record into scrummage collection")
+            }
+            else{
+                console.log('record currently in the scrummage collection', data);
             }
 
             const updates = {
