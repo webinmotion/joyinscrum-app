@@ -1,6 +1,6 @@
 import React from 'react';
-import { Surface, Text } from 'react-native-paper';
-import { View, StyleSheet } from 'react-native';
+import { Surface, Text, useTheme, } from 'react-native-paper';
+import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
 import { supabase } from '../../service/auth';
 import { useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -9,7 +9,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 export default function ({ route }) {
 
   const { scrumId, playerHandle } = route.params;
-
+  const theme = useTheme();
   const [choices, setChoices] = useState('');
   const [current, setCurrent] = useState('');
   const [value, setValue] = useState(null);
@@ -93,52 +93,79 @@ export default function ({ route }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.topicLabel} variant="titleLarge">Current Topic</Text>
-
-      <Surface style={styles.surface} elevation={4}>
-        <Text style={styles.currentTopic}>{current}</Text>
-      </Surface>
-
-      <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={calcOptions(choices)}
-        search
-        maxHeight={400}
-        labelField="label"
-        valueField="value"
-        placeholder={!isFocus ? 'Select item' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          setValue(item.value);
-          setIsFocus(false);
-          submitChoice(item.value);
+    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
         }}
-        renderLeftIcon={() => (
-          <AntDesign
-            style={styles.icon}
-            color={isFocus ? 'blue' : 'black'}
-            name="Safety"
-            size={20}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            resizeMode="contain"
+            style={{
+              height: 120,
+              width: 300,
+            }}
+            source={require("../../assets/scrum-vote.png")}
           />
-        )}
-      />
-    </View>
+        </View>
+
+        <View
+          style={{
+            flex: 5,
+            paddingHorizontal: 20,
+            paddingBottom: 20,
+            backgroundColor: theme.light,
+          }}
+        >
+
+          <Surface style={styles.surface} elevation={4}>
+            <Text style={styles.currentTopic}>{current}</Text>
+          </Surface>
+
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={calcOptions(choices)}
+            search
+            maxHeight={400}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Select item' : '...'}
+            searchPlaceholder="Search..."
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setValue(item.value);
+              setIsFocus(false);
+              submitChoice(item.value);
+            }}
+            renderLeftIcon={() => (
+              <AntDesign
+                style={styles.icon}
+                color={isFocus ? 'blue' : 'black'}
+                name="Safety"
+                size={20}
+              />
+            )}
+          />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    padding: 16,
-  },
   dropdown: {
     height: 50,
     borderColor: 'gray',
