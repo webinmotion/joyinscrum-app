@@ -49,3 +49,15 @@ npx expo prebuild --clean --platform android
 eas build --platform android (all android ios)
 ```
 
+building for preview
+```bash
+# after updating eas.json
+eas build -p android --profile preview
+eas build:run -p android
+# (optional) alternatively, use the latest build by default
+# apk - install by uploading app from the broswer and into phone
+# aab - install via submitting to google store and then installing from there
+eas build:run -p android --latest
+```
+
+
