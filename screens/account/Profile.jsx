@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../service/auth';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, Pressable } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { useAppContext } from '../../provider/AuthProvider';
 
@@ -120,22 +120,30 @@ export default function ({ navigation }) {
                 </Button>
             </View>
 
-            <View style={styles.fixToText}>
-                <Button
-                    icon="lock"
-                    mode="contained"
-                    style={styles.button}
-                    onPress={() => supabase.auth.signOut()}>
-                    <Text style={styles.btnText}>Sign Out</Text>
-                </Button>
-                <Button
-                    icon="restart"
-                    mode="contained"
-                    style={styles.button}
-                    onPress={() => navigation.popToTop()}>
-                    <Text style={styles.btnText}>Start Over</Text>
-                </Button>
-            </View>
+            <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 30,
+              justifyContent: "center",
+            }}
+          >
+            <Pressable
+              onPress={() => supabase.auth.signOut()}
+            >
+              <Text
+                size="md"
+                fontWeight="bold"
+                style={{
+                  marginLeft: 5,
+                  borderStyle: 'solid',
+                  borderColor: "#ccc"
+                }}
+              >
+                Sign Out
+              </Text>
+            </Pressable>
+          </View>
         </View>
     )
 }

@@ -22,7 +22,7 @@ export default function ({ navigation }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
-  const { setSession } = useAppContext();
+  const { setSession, togglePlaying } = useAppContext();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -186,7 +186,7 @@ export default function ({ navigation }) {
             }}
           >
             <Pressable
-              onPress={() => navigation.popToTop()}
+              onPress={() => togglePlaying()}
             >
               <Text
                 size="md"

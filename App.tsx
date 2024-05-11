@@ -1,13 +1,6 @@
 import { AppRegistry } from 'react-native';
 import { MD3LightTheme as DefaultTheme, PaperProvider, } from 'react-native-paper';
-import LoginScreen from './screens/auth/Login';
-import RegisterScreen from './screens/auth/Register';
-import RecoverScreen from './screens/auth/Recover';
-import ProfileScreen from './screens/auth/Profile';
-import HomeScreen from "./screens/guest/Home";
-import GuestScreen from "./screens/guest/Guest";
-import ScrumScreen from "./screens/guest/Scrum";
-import ScannerScreen from "./screens/guest/Scanner";
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { expo as expoConfig } from './app.json';
@@ -15,6 +8,8 @@ import { AuthProvider, useAppContext } from './provider/AuthProvider';
 import { supabase } from './service/auth';
 import { useEffect } from 'react';
 import "@expo/metro-runtime";
+import GuestNavigator from './screens/guest/GuestNavigator';
+import AccountNavigator from './screens/account/AccountNavigator';
 
 const theme = {
   ...DefaultTheme,
@@ -30,7 +25,7 @@ const Stack = createNativeStackNavigator();
 
 function App() {
 
-  const { setSession } = useAppContext();
+  const { isPlaying, setSession } = useAppContext();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -81,18 +76,7 @@ function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          {/* guest screens */}
-          <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'JoyInScrum Client' }} />
-          <Stack.Screen name="Scanner" component={ScannerScreen} />
-          <Stack.Screen name="Guest" component={GuestScreen} />
-          <Stack.Screen name="Scrum" component={ScrumScreen} options={{ title: 'Scrum Options' }} />
-          {/* auth screens */}
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Recover" component={RecoverScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-        </Stack.Navigator>
+        {isPlaying ? <GuestNavigator /> : <AccountNavigator />}
       </NavigationContainer>
     </PaperProvider>
   );

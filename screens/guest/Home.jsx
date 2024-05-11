@@ -1,10 +1,12 @@
 import { Text, Button, useTheme } from 'react-native-paper';
 import { View, StyleSheet, Pressable, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useAppContext } from '../../provider/AuthProvider';
 
 export default function ({ navigation }) {
 
   const theme = useTheme();
+  const {togglePlaying} = useAppContext();
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
@@ -31,7 +33,7 @@ export default function ({ navigation }) {
               padding: 10,
               alignSelf: 'flex-end'
             }}
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => togglePlaying()}
           >
             <Text fontWeight="bold" style={{
               fontWeight: 'bold',

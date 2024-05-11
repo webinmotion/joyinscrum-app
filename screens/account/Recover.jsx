@@ -114,7 +114,7 @@ export default function ({ navigation }) {
             <Text size="md">Already have an account?</Text>
             <Pressable
               onPress={() => {
-                navigation.navigate("Login");
+                navigation.popToTop();
               }}
             >
               <Text
