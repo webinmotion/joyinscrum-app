@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from "./Home";
 import GuestScreen from "./Guest";
 import ScrumScreen from "./Scrum";
-import ScannerScreen from "./Scanner";
+import ScannerScreen from "./ScannerV2";
 
 const Guest = createNativeStackNavigator();
 

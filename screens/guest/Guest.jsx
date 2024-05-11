@@ -1,6 +1,6 @@
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useAppContext } from '../../provider/AuthProvider';
 import { supabase } from '../../service/auth';
 
@@ -16,10 +16,15 @@ export default function ({ route, navigation }) {
   }
 
   const handleSubmit = () => {
-    navigation.navigate('Scrum', {
-      scrumId,
-      playerHandle: handle,
-    })
+    if (handle) {
+      navigation.navigate('Scrum', {
+        scrumId,
+        playerHandle: handle,
+      })
+    }
+    else {
+      Alert.alert("A unique user handle is required before proceed")
+    }
   }
 
   useEffect(() => {
