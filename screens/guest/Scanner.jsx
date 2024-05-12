@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Text } from 'react-native-paper';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useCameraPermissions, CameraView, } from 'expo-camera';
 
 export default function ({ navigation }) {
 
+  const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [scrumUrl, setScrumUrl] = useState(null);
 
@@ -52,7 +53,7 @@ export default function ({ navigation }) {
       <CameraView
         onBarcodeScanned={handleCodeScanned}
         style={styles.camera}
-        facing={"back"}
+        facing={facing}
         barcodeScannerSettings={{
           barCodeTypes: [
             "qr",
@@ -68,7 +69,13 @@ export default function ({ navigation }) {
             "codabar",
           ],
         }}
-      />
+      >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+            <Text style={styles.cameraText}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </CameraView>
     </View>
   );
 }
@@ -95,9 +102,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     alignItems: "center",
   },
-  text: {
-    fontSize: 24,
+  cameraText: {
+    fontSize: 20,
     fontWeight: "bold",
     color: "white",
+    padding: 8,
   },
 });

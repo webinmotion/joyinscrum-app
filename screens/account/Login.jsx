@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   ScrollView,
   Pressable,
@@ -6,9 +6,10 @@ import {
   KeyboardAvoidingView,
   Image,
   Alert,
+  Text,
+  StyleSheet,
 } from "react-native";
 import {
-  Text,
   TextInput,
   Button,
   useTheme,
@@ -23,18 +24,19 @@ export default function ({ navigation }) {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const { setSession, togglePlaying } = useAppContext();
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
+      setSession(session)
 
-        if(session?.user.email){
-            navigation.navigate('Profile', {
-                session,
-            })
-        }
+      if (session?.user.email) {
+        navigation.navigate('Profile', {
+          session,
+        })
+      }
     })
-}, [])
+  }, [])
 
   async function signInWithEmail() {
     setLoading(true)
@@ -87,16 +89,7 @@ export default function ({ navigation }) {
             backgroundColor: theme.light,
           }}
         >
-          <Text
-            fontWeight="bold"
-            style={{
-              alignSelf: "center",
-              padding: 30,
-            }}
-            size="h3"
-          >
-            Login
-          </Text>
+          <Text style={styles.titleText}>Login</Text>
           <Text>Email</Text>
           <TextInput
             containerStyle={{ marginTop: 15 }}
@@ -141,63 +134,47 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 15,
               justifyContent: "center",
             }}
           >
-            <Text variant="labelLarge">Don't have an account?</Text>
+            <Text style={{ marginRight: 5 }}>Don't have an account?</Text>
             <Pressable
               onPress={() => {
                 navigation.navigate("Register");
               }}
             >
-              <Text
-                variant="titleMedium"
-                style={{
-                  marginLeft: 5,
-                }}
-              >
-                Register here
-              </Text>
+              <Text style={styles.pressableText}>Register here</Text>
             </Pressable>
           </View>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 15,
               justifyContent: "center",
             }}
           >
             <Pressable
-              onPress={() => {
+              onPress={({pressed}) => {
                 navigation.navigate("Recover");
               }}
             >
-              <Text variant="titleMedium" fontWeight="bold">
-                Forget password
-              </Text>
+              <Text style={styles.pressableText}>Forget password</Text>
             </Pressable>
           </View>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 15,
               justifyContent: "center",
             }}
           >
             <Pressable
               onPress={() => togglePlaying()}
             >
-              <Text
-                variant="titleMedium"
-                style={{
-                  marginLeft: 5,
-                  borderStyle: 'solid',
-                  borderColor: "#ccc"
-                }}
-              >
+              <Text style={styles.exitText}>
                 Exit <MaterialCommunityIcons name="location-exit" size={18} color="black" />
               </Text>
             </Pressable>
@@ -207,3 +184,20 @@ export default function ({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+const createStyles = (theme) => StyleSheet.create({
+  titleText: {
+    alignSelf: "center",
+    padding: 30,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  pressableText: {
+    color: theme.colors.primary,
+    padding: 5,
+  },
+  exitText: {
+    color: theme.colors.primary,
+    padding: 5,
+  }
+})

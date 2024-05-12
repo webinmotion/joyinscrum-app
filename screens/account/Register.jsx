@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ScrollView,
   Pressable,
@@ -6,9 +6,10 @@ import {
   KeyboardAvoidingView,
   Image,
   Alert,
+  Text,
+  StyleSheet,
 } from "react-native";
 import {
-  Text,
   TextInput,
   Button,
   useTheme,
@@ -20,6 +21,7 @@ export default function ({ navigation }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
 
   async function signUpWithEmail() {
     setLoading(true)
@@ -68,16 +70,7 @@ export default function ({ navigation }) {
             backgroundColor: theme.light,
           }}
         >
-          <Text
-            fontWeight="bold"
-            size="h3"
-            style={{
-              alignSelf: "center",
-              padding: 30,
-            }}
-          >
-            Register
-          </Text>
+          <Text style={styles.titleText}>Register</Text>
           <Text>Email</Text>
           <TextInput
             containerStyle={{ marginTop: 15 }}
@@ -122,22 +115,17 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 20,
+              marginTop: 15,
               justifyContent: "center",
             }}
           >
-            <Text variant="labelLarge">Already have an account?</Text>
+            <Text style={{ marginRight: 5 }}>Already have an account?</Text>
             <Pressable
               onPress={() => {
                 navigation.popToTop();
               }}
             >
-              <Text
-                variant="titleMedium"
-                style={{
-                  marginLeft: 5,
-                }}
-              >
+              <Text style={styles.pressableText}>
                 Login here
               </Text>
             </Pressable>
@@ -147,3 +135,16 @@ export default function ({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+const createStyles = (theme) => StyleSheet.create({
+  titleText: {
+    alignSelf: "center",
+    padding: 30,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  pressableText: {
+    color: theme.colors.primary,
+    padding: 5,
+  }
+})
