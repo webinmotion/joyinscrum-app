@@ -112,6 +112,9 @@ export default function ({ navigation }) {
               marginTop: 20,
               padding: 10,
             }}
+            labelStyle={{
+              fontSize: 18
+            }}
             disabled={loading}
           >Create an account</Button>
 
@@ -119,19 +122,18 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 15,
+              marginTop: 20,
               justifyContent: "center",
             }}
           >
-            <Text size="md">Already have an account?</Text>
+            <Text variant="labelLarge">Already have an account?</Text>
             <Pressable
               onPress={() => {
                 navigation.popToTop();
               }}
             >
               <Text
-                size="md"
-                fontWeight="bold"
+                variant="titleMedium"
                 style={{
                   marginLeft: 5,
                 }}

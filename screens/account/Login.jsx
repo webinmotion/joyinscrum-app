@@ -131,6 +131,9 @@ export default function ({ navigation }) {
               marginTop: 20,
               padding: 10,
             }}
+            labelStyle={{
+              fontSize: 18
+            }}
             disabled={loading}
           >Continue</Button>
 
@@ -138,19 +141,18 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 15,
+              marginTop: 20,
               justifyContent: "center",
             }}
           >
-            <Text size="md">Don't have an account?</Text>
+            <Text variant="labelLarge">Don't have an account?</Text>
             <Pressable
               onPress={() => {
                 navigation.navigate("Register");
               }}
             >
               <Text
-                size="md"
-                fontWeight="bold"
+                variant="titleMedium"
                 style={{
                   marginLeft: 5,
                 }}
@@ -163,7 +165,7 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 10,
+              marginTop: 20,
               justifyContent: "center",
             }}
           >
@@ -172,7 +174,7 @@ export default function ({ navigation }) {
                 navigation.navigate("Recover");
               }}
             >
-              <Text size="md" fontWeight="bold">
+              <Text variant="titleMedium" fontWeight="bold">
                 Forget password
               </Text>
             </Pressable>
@@ -181,7 +183,7 @@ export default function ({ navigation }) {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 30,
+              marginTop: 20,
               justifyContent: "center",
             }}
           >
@@ -189,8 +191,7 @@ export default function ({ navigation }) {
               onPress={() => togglePlaying()}
             >
               <Text
-                size="md"
-                fontWeight="bold"
+                variant="titleMedium"
                 style={{
                   marginLeft: 5,
                   borderStyle: 'solid',
