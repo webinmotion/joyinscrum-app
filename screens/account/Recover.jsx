@@ -9,12 +9,8 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import {
-  TextInput,
-  Button,
-  useTheme,
-} from "react-native-paper";
-import { supabase } from '../../service/auth';
+import { TextInput, Button, useTheme } from "react-native-paper";
+import { supabase } from "../../service/auth";
 
 export default function ({ navigation }) {
   const [email, setEmail] = useState("");
@@ -24,18 +20,19 @@ export default function ({ navigation }) {
 
   async function forget() {
     setLoading(true);
-    console.log('redirect to reset', process.env.EXPO_PUBLIC_DOMAIN_URL)
+    console.log("redirect to reset", process.env.EXPO_PUBLIC_DOMAIN_URL);
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}/reset`,
     });
 
     if (error) {
-      Alert.alert(error)
-    }
-    else {
-      alert("If the email is valid, you will find in your inbox an email with additional password recovery steps");
+      Alert.alert(error);
+    } else {
+      alert(
+        "If the email is valid, you will find in your inbox an email with additional password recovery steps",
+      );
       console.log(data);
-      navigation.popToTop()
+      navigation.popToTop();
     }
     setLoading(false);
   }
@@ -94,10 +91,12 @@ export default function ({ navigation }) {
               padding: 10,
             }}
             labelStyle={{
-              fontSize: 18
+              fontSize: 18,
             }}
             disabled={loading}
-          >Send email</Button>
+          >
+            Send email
+          </Button>
 
           <View
             style={{
@@ -122,15 +121,16 @@ export default function ({ navigation }) {
   );
 }
 
-const createStyles = (theme) => StyleSheet.create({
-  titleText: {
-    alignSelf: "center",
-    padding: 30,
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  pressableText: {
-    color: theme.colors.primary,
-    padding: 5,
-  }
-})
+const createStyles = (theme) =>
+  StyleSheet.create({
+    titleText: {
+      alignSelf: "center",
+      padding: 30,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    pressableText: {
+      color: theme.colors.primary,
+      padding: 5,
+    },
+  });

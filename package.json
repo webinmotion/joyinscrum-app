@@ -17,7 +17,13 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "doctor": "npx expo-doctor@latest"
+    "doctor": "npx expo-doctor@latest",
+    "lint": "npx eslint .",
+    "pretty": "npx prettier . --write",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@expo/metro-runtime": "^3.2.1",
@@ -42,7 +48,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@eslint/js": "^9.2.0",
     "@types/react": "~18.2.14",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
     "typescript": "~5.3.3"
   },
   "private": true

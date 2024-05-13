@@ -9,12 +9,8 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import {
-  TextInput,
-  Button,
-  useTheme,
-} from "react-native-paper";
-import { supabase } from '../../service/auth';
+import { TextInput, Button, useTheme } from "react-native-paper";
+import { supabase } from "../../service/auth";
 
 export default function ({ navigation }) {
   const [email, setEmail] = useState("");
@@ -24,19 +20,23 @@ export default function ({ navigation }) {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   async function signUpWithEmail() {
-    setLoading(true)
-    const { data: { session }, error, } = await supabase.auth.signUp({
+    setLoading(true);
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
       email: email,
       password: password,
       options: {
         emailRedirectTo: `${process.env.EXPO_PUBLIC_DOMAIN_URL}/signin`,
       },
-    })
+    });
 
     if (error) Alert.alert(error.message);
 
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
+    if (!session)
+      Alert.alert("Please check your inbox for email verification!");
+    setLoading(false);
   }
 
   return (
@@ -106,10 +106,12 @@ export default function ({ navigation }) {
               padding: 10,
             }}
             labelStyle={{
-              fontSize: 18
+              fontSize: 18,
             }}
             disabled={loading}
-          >Create an account</Button>
+          >
+            Create an account
+          </Button>
 
           <View
             style={{
@@ -125,9 +127,7 @@ export default function ({ navigation }) {
                 navigation.popToTop();
               }}
             >
-              <Text style={styles.pressableText}>
-                Login here
-              </Text>
+              <Text style={styles.pressableText}>Login here</Text>
             </Pressable>
           </View>
         </View>
@@ -136,15 +136,16 @@ export default function ({ navigation }) {
   );
 }
 
-const createStyles = (theme) => StyleSheet.create({
-  titleText: {
-    alignSelf: "center",
-    padding: 30,
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  pressableText: {
-    color: theme.colors.primary,
-    padding: 5,
-  }
-})
+const createStyles = (theme) =>
+  StyleSheet.create({
+    titleText: {
+      alignSelf: "center",
+      padding: 30,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    pressableText: {
+      color: theme.colors.primary,
+      padding: 5,
+    },
+  });

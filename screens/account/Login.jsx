@@ -9,14 +9,10 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import {
-  TextInput,
-  Button,
-  useTheme,
-} from "react-native-paper";
-import { supabase } from '../../service/auth';
+import { TextInput, Button, useTheme } from "react-native-paper";
+import { supabase } from "../../service/auth";
 import { useAppContext } from "../../provider/AuthProvider";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function ({ navigation }) {
   const [email, setEmail] = useState("");
@@ -28,34 +24,33 @@ export default function ({ navigation }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
+      setSession(session);
 
       if (session?.user.email) {
-        navigation.navigate('Profile', {
+        navigation.navigate("Profile", {
           session,
-        })
+        });
       }
-    })
-  }, [])
+    });
+  }, []);
 
   async function signInWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
-    })
+    });
 
     if (error) {
-      Alert.alert(error.message)
-    }
-    else {
+      Alert.alert(error.message);
+    } else {
       const { session } = data;
-      setSession(session)
-      navigation.navigate('Profile', {
-        session
-      })
+      setSession(session);
+      navigation.navigate("Profile", {
+        session,
+      });
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
@@ -125,10 +120,12 @@ export default function ({ navigation }) {
               padding: 10,
             }}
             labelStyle={{
-              fontSize: 18
+              fontSize: 18,
             }}
             disabled={loading}
-          >Continue</Button>
+          >
+            Continue
+          </Button>
 
           <View
             style={{
@@ -156,7 +153,7 @@ export default function ({ navigation }) {
             }}
           >
             <Pressable
-              onPress={({pressed}) => {
+              onPress={({ pressed }) => {
                 navigation.navigate("Recover");
               }}
             >
@@ -171,11 +168,14 @@ export default function ({ navigation }) {
               justifyContent: "center",
             }}
           >
-            <Pressable
-              onPress={() => togglePlaying()}
-            >
+            <Pressable onPress={() => togglePlaying()}>
               <Text style={styles.exitText}>
-                Exit <MaterialCommunityIcons name="location-exit" size={18} color="black" />
+                Exit{" "}
+                <MaterialCommunityIcons
+                  name="location-exit"
+                  size={18}
+                  color="black"
+                />
               </Text>
             </Pressable>
           </View>
@@ -185,19 +185,20 @@ export default function ({ navigation }) {
   );
 }
 
-const createStyles = (theme) => StyleSheet.create({
-  titleText: {
-    alignSelf: "center",
-    padding: 30,
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  pressableText: {
-    color: theme.colors.primary,
-    padding: 5,
-  },
-  exitText: {
-    color: theme.colors.primary,
-    padding: 5,
-  }
-})
+const createStyles = (theme) =>
+  StyleSheet.create({
+    titleText: {
+      alignSelf: "center",
+      padding: 30,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+    pressableText: {
+      color: theme.colors.primary,
+      padding: 5,
+    },
+    exitText: {
+      color: theme.colors.primary,
+      padding: 5,
+    },
+  });

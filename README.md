@@ -1,8 +1,8 @@
 # joyinscrum-app
 
-Mobile client for __joyinscrum__ application.
+Mobile client for **joyinscrum** application.
 
-To override registry in __package-lock.json__, try using:
+To override registry in **package-lock.json**, try using:
 
 ```bash
 rm -rf node_modules
@@ -41,6 +41,7 @@ npm i @supabase/supabase-js
 ```
 
 building in eas
+
 ```bash
 npx expo install expo-system-ui
 # commit all pending git changes
@@ -50,6 +51,7 @@ eas build --platform android (all android ios)
 ```
 
 building for preview
+
 ```bash
 # after updating eas.json
 eas build -p android --profile preview
@@ -59,5 +61,3 @@ eas build:run -p android
 # aab - install via submitting to google store and then installing from there
 eas build:run -p android --latest
 ```
-
-

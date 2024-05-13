@@ -1,12 +1,18 @@
-import { Text, Button, useTheme } from 'react-native-paper';
-import { View, StyleSheet, Pressable, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAppContext } from '../../provider/AuthProvider';
+import { Text, Button, useTheme } from "react-native-paper";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  KeyboardAvoidingView,
+  ScrollView,
+  Image,
+} from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useAppContext } from "../../provider/AuthProvider";
 
 export default function ({ navigation }) {
-
   const theme = useTheme();
-  const {togglePlaying} = useAppContext();
+  const { togglePlaying } = useAppContext();
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
@@ -18,28 +24,31 @@ export default function ({ navigation }) {
         <View
           style={{
             flex: 1,
-            flexDirection: 'row',
+            flexDirection: "row",
             paddingHorizontal: 20,
             paddingBottom: 20,
             backgroundColor: theme.light,
-            alignContent: 'bottom',
-            justifyContent: 'center'
+            alignContent: "bottom",
+            justifyContent: "center",
           }}
         >
-
           <Pressable
             style={{
               marginTop: 20,
               padding: 10,
-              alignSelf: 'flex-end'
+              alignSelf: "flex-end",
             }}
             onPress={() => togglePlaying()}
           >
-            <Text fontWeight="bold" style={{
-              fontWeight: 'bold',
-              color: theme.colors.primary
-            }}>
-              <MaterialCommunityIcons name="account" size={18} /> Visit my profile 
+            <Text
+              fontWeight="bold"
+              style={{
+                fontWeight: "bold",
+                color: theme.colors.primary,
+              }}
+            >
+              <MaterialCommunityIcons name="account" size={18} /> Visit my
+              profile
             </Text>
           </Pressable>
         </View>
@@ -69,12 +78,11 @@ export default function ({ navigation }) {
             backgroundColor: theme.light,
           }}
         >
-
           <Button
             icon="qrcode"
             mode="contained"
             style={styles.button}
-            onPress={() => navigation.navigate('Scanner')}
+            onPress={() => navigation.navigate("Scanner")}
           >
             <Text style={styles.btnText}>Scan QR Code</Text>
           </Button>
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   btnText: {
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
